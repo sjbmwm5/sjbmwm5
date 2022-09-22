@@ -1,0 +1,112 @@
+package test;
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Main {
+	
+	public class PrimeNumbersAnalysis {
+		private final static String TITLE = "Welcome to Palendromic Primes V1.0";
+		private final static String CONTINUE_PROMPT = "Do this again? [y/N] ";
+		
+		public static boolean isPrime(int number) {
+			for (int divisor = 2; divisor <= (int)Math.sqrt(number); divisor++) {
+				if (number % divisor == 0) {
+					return false;
+				}
+			}
+			return true; 
+		}
+		
+		public static int reverse(int n) {
+			int d = 0, s = 0;
+				while (n > 0) {
+					d = n % 10;
+					s = s * 10 + d;
+					n = n / 10;
+				}
+				return s;
+		}
+		
+		public static boolean isPalindrome(int Nreverse, int Norigin) {
+			if (Nreverse == Norigin) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
+		public static void FindPrintSum(int start, int end) {
+			boolean Tprime, Tpalindrome;
+			int Rnum = 0, sumArray = 0, n = 0;
+			int [] primeArray = new int[(end - start)];
+				for (int i = start; i <= end; i++) {
+					Tprime = isPrime(i);
+					Rnum = reverse(i);
+					Tpalindrome = isPalindrome(Rnum, i);
+					if (Tprime == true && Tpalindrome == true) {
+						primeArray[n] = i;
+						n++;
+						
+					}
+					
+				}
+				sumArray = Arrays.stream(primeArray).sum();
+				System.out.println("Sum of Palindromic Primes between " + start + " and " + end + " = " + sumArray);
+			
+		}
+		
+		public static void printPrimeNumbers(int numberOfPrimes) {
+			final int NUMBER_OF_PRIMES_PER_LINE = 10;
+			int count = 0;
+			int number = 2;
+
+			while (count < numberOfPrimes) {
+				if (isPrime(number)) {
+					count++;
+					System.out.printf("%-5d", number);
+
+					if (count % NUMBER_OF_PRIMES_PER_LINE == 0) {
+						System.out.println();
+					}
+				}
+
+				number++;
+			}
+			System.out.println();
+		}
+		
+		private static void process(Scanner sc, String args[]) {
+			
+			int x, y;
+			System.out.print("Enter start: ");
+			x = sc.nextInt();
+			System.out.print("Enter end: ");
+			y = sc.nextInt();
+			FindPrintSum(x,y);
+			sc.nextLine(); // Clear Keyboard
+		}
+		
+		private static boolean doThisAgain(Scanner sc, String prompt) {
+			System.out.print(prompt);
+			String doOver = sc.nextLine();
+			return doOver.trim().equalsIgnoreCase("Y");
+		}
+
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Welcome to " + TITLE);
+		Scanner sc = new Scanner(System.in);
+		do {
+			process(sc, args);
+		} while (doThisAgain(sc, CONTINUE_PROMPT));
+		sc.close();
+		System.out.println("Thank you for using " + TITLE);
+	
+	}
+
+	}
+}
